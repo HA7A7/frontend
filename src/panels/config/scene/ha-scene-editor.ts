@@ -705,6 +705,7 @@ export class HaSceneEditor extends SubscribeMixin(
   }
 
   private async _saveScene(): Promise<void> {
+    this._errors = undefined;
     const id = !this.sceneId ? "" + Date.now() : this.sceneId!;
     this._config = { ...this._config!, entities: this._calculateStates() };
     try {
