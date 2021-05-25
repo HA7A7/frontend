@@ -7,8 +7,10 @@ import {
   TemplateResult,
 } from "lit";
 import { customElement, property, state } from "lit/decorators";
+import { DOMAINS_WITH_DYNAMIC_PICTURE } from "../../../common/const";
 import { applyThemesOnElement } from "../../../common/dom/apply_themes_on_element";
 import { fireEvent } from "../../../common/dom/fire_event";
+import { computeDomain } from "../../../common/entity/compute_domain";
 import { computeStateDisplay } from "../../../common/entity/compute_state_display";
 import { computeStateName } from "../../../common/entity/compute_state_name";
 import { stateIcon } from "../../../common/entity/state_icon";
@@ -116,9 +118,18 @@ export class HuiEntityCard extends LitElement implements LovelaceCard {
             ${this._config.name || computeStateName(stateObj)}
           </div>
           <div class="icon">
-            <ha-icon
-              .icon=${this._config.icon || stateIcon(stateObj)}
-            ></ha-icon>
+            <state-badge
+              .hass=${this.hass}
+              .stateObj=${stateObj}
+              .overrideIcon=${this._config.icon || stateIcon(stateObj)}
+              .overrideImage=${DOMAINS_WITH_DYNAMIC_PICTURE.has(
+                computeDomain(stateObj.entity_id)
+              )
+                ? ""
+                : stateObj?.attributes.entity_picture_local ||
+                  stateObj?.attributes.entity_picture}
+              .stateColor=${this._config.state_color}
+            ></state-badge>
           </div>
         </div>
         <div class="info">
