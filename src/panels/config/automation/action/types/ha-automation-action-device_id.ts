@@ -74,6 +74,7 @@ export class HaDeviceAction extends LitElement {
               .computeLabel=${this._extraFieldsComputeLabelCallback(
                 this.hass.localize
               )}
+              .localize=${this.hass.localize}
               @value-changed=${this._extraFieldsChanged}
             ></ha-form>
           `

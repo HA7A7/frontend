@@ -204,6 +204,7 @@ class HaAuthFlow extends litLocalizeLiteMixin(LitElement) {
             .disabled=${this._submitting}
             .computeLabel=${this._computeLabelCallback(step)}
             .computeError=${this._computeErrorCallback(step)}
+            .localize=${this.localize}
             @value-changed=${this._stepDataChanged}
           ></ha-form>
           ${this.clientId === genClientId() &&

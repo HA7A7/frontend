@@ -81,6 +81,7 @@ class HassioRegistriesDialog extends LitElement {
                 .schema=${SCHEMA}
                 @value-changed=${this._valueChanged}
                 .computeLabel=${this._computeLabel}
+                .localize=${this.hass.localize}
               ></ha-form>
               <div class="action">
                 <mwc-button

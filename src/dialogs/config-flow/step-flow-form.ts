@@ -54,6 +54,7 @@ class StepFlowForm extends LitElement {
           .error=${step.errors}
           .computeLabel=${this._labelCallback}
           .computeError=${this._errorCallback}
+          .localize=${this.hass.localize}
         ></ha-form>
       </div>
       <div class="buttons">

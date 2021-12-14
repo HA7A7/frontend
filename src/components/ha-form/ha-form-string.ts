@@ -1,16 +1,17 @@
-import { mdiEye, mdiEyeOff } from "@mdi/js";
 import "@material/mwc-textfield";
 import type { TextField } from "@material/mwc-textfield";
+import { mdiEye, mdiEyeOff } from "@mdi/js";
 import {
   css,
   CSSResultGroup,
   html,
   LitElement,
-  TemplateResult,
   PropertyValues,
+  TemplateResult,
 } from "lit";
-import { customElement, property, state, query } from "lit/decorators";
+import { customElement, property, query, state } from "lit/decorators";
 import { fireEvent } from "../../common/dom/fire_event";
+import { LocalizeFunc } from "../../common/translations/localize";
 import "../ha-icon-button";
 import type {
   HaFormElement,
@@ -22,6 +23,8 @@ const MASKED_FIELDS = ["password", "secret", "token"];
 
 @customElement("ha-form-string")
 export class HaFormString extends LitElement implements HaFormElement {
+  @property() public localize?: LocalizeFunc = undefined;
+
   @property() public schema!: HaFormStringSchema;
 
   @property() public data!: HaFormStringData;
@@ -44,6 +47,7 @@ export class HaFormString extends LitElement implements HaFormElement {
     const isPassword = MASKED_FIELDS.some((field) =>
       this.schema.name.includes(field)
     );
+
     return html`
       <mwc-textfield
         .type=${!isPassword
@@ -60,13 +64,23 @@ export class HaFormString extends LitElement implements HaFormElement {
           ? // reserve some space for the icon.
             html`<div style="width: 24px"></div>`
           : this.schema.description?.suffix}
-        .validationMessage=${this.schema.required ? "Required" : undefined}
+        .validationMessage=${this.schema.required
+          ? this.localize
+            ? this.localize("ui.common.error_required")
+            : "Required"
+          : undefined}
         @input=${this._valueChanged}
       ></mwc-textfield>
       ${isPassword
         ? html`<ha-icon-button
             toggles
-            .label=${`${this._unmaskedPassword ? "Hide" : "Show"} password`}
+            .label=${this._unmaskedPassword
+              ? (this.localize &&
+                  this.localize("ui.components.form.string.hide_password")) ||
+                "Hide password"
+              : (this.localize &&
+                  this.localize("ui.components.form.string.show_password")) ||
+                "Show password"}
             @click=${this._toggleUnmaskedPassword}
             tabindex="-1"
             .path=${this._unmaskedPassword ? mdiEyeOff : mdiEye}

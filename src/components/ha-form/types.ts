@@ -1,4 +1,5 @@
 import type { LitElement } from "lit";
+import { LocalizeFunc } from "../../common/translations/localize";
 import type { HaDurationData } from "../ha-duration-input";
 
 export type HaFormSchema =
@@ -83,4 +84,5 @@ export interface HaFormElement extends LitElement {
   schema: HaFormSchema | HaFormSchema[];
   data?: HaFormDataContainer | HaFormData;
   label?: string;
+  localize?: LocalizeFunc;
 }

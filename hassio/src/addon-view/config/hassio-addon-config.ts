@@ -148,6 +148,7 @@ class HassioAddonConfig extends LitElement {
                         this.addon.schema!
                       )
                 )}
+                .localize=${this.hass.localize}
               ></ha-form>`
             : html` <ha-yaml-editor
                 @value-changed=${this._configChanged}

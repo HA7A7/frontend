@@ -2,6 +2,8 @@ import { css, CSSResultGroup, html, LitElement } from "lit";
 import { customElement, property } from "lit/decorators";
 import { dynamicElement } from "../../common/dom/dynamic-element-directive";
 import { fireEvent } from "../../common/dom/fire_event";
+import { LocalizeFunc } from "../../common/translations/localize";
+import { litLocalizeLiteMixin } from "../../mixins/lit-localize-lite-mixin";
 import "../ha-alert";
 import "./ha-form-boolean";
 import "./ha-form-constant";
@@ -16,7 +18,12 @@ import { HaFormElement, HaFormDataContainer, HaFormSchema } from "./types";
 const getValue = (obj, item) => (obj ? obj[item.name] : null);
 
 @customElement("ha-form")
-export class HaForm extends LitElement implements HaFormElement {
+export class HaForm
+  extends litLocalizeLiteMixin(LitElement)
+  implements HaFormElement
+{
+  @property() public localize!: LocalizeFunc;
+
   @property() public data!: HaFormDataContainer;
 
   @property() public schema!: HaFormSchema[];
@@ -28,6 +35,11 @@ export class HaForm extends LitElement implements HaFormElement {
   @property() public computeError?: (schema: HaFormSchema, error) => string;
 
   @property() public computeLabel?: (schema: HaFormSchema) => string;
+
+  constructor() {
+    super();
+    this.translationFragment = "lovelace";
+  }
 
   public focus() {
     const root = this.shadowRoot?.querySelector(".root");
@@ -67,6 +79,7 @@ export class HaForm extends LitElement implements HaFormElement {
               data: getValue(this.data, item),
               label: this._computeLabel(item),
               disabled: this.disabled,
+              localize: this.localize,
             })}
           `;
         })}

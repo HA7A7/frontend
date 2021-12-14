@@ -139,7 +139,7 @@ export async function getTranslation(
     throw new Error("Language en is not found in metadata");
   }
 
-  // nl-abcd.jon or logbook/nl-abcd.json
+  // nl-abcd.json or logbook/nl-abcd.json
   const fingerprint = `${fragment ? fragment + "/" : ""}${language}-${
     metadata.hash
   }.json`;

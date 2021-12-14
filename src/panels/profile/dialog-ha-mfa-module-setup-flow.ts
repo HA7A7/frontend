@@ -117,6 +117,7 @@ class HaMfaModuleSetupFlow extends LitElement {
                       .error=${this._step.errors}
                       .computeLabel=${this._computeLabel}
                       .computeError=${this._computeError}
+                      .localize=${this.hass.localize}
                       @value-changed=${this._stepDataChanged}
                     ></ha-form>`
                 : ""}`}

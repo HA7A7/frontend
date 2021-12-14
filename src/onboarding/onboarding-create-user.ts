@@ -55,6 +55,7 @@ class OnboardingCreateUser extends LitElement {
         .disabled=${this._loading}
         .error=${this._formError}
         .schema=${CREATE_USER_SCHEMA}
+        .localize=${this.localize}
         @value-changed=${this._handleValueChanged}
       ></ha-form>
 

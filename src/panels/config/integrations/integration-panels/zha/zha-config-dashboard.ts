@@ -121,6 +121,7 @@ class ZHAConfigDashboard extends LitElement {
                       this.hass.localize,
                       section
                     )}
+                    .localize=${this.hass.localize}
                   ></ha-form>
                 </div>
               </ha-card>`
